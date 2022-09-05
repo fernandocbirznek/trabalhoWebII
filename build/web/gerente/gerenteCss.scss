@@ -1,0 +1,107 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 17/07/2022, 14:08:13
+    Author     : User
+*/
+
+.conteudo {
+    background-color: #A7CECB;
+    min-height: 600px;
+}
+
+.botao-gerente {
+    padding: 6px 12px;
+    border-radius: 10px;
+}
+
+.botao-gerente:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px black;
+    opacity: 0.8;
+}
+
+.botao-gerente-lista {
+    background-color: #F1E1A6;
+}
+
+.botao-gerente-atendimento-aberto {
+    background-color: #C3E5AE;
+}
+
+.botao-gerente-atendimento {
+    background-color: #E1B083;
+}
+
+.botao-gerente-deslogar {
+    background-color: #D47751;
+}
+
+.botao-gerente-relatorio-funcionario {
+    background-color: #839788;
+}
+
+.botao-gerente-relatorio-data{
+    background-color: #BAA898;
+}
+
+.botao-gerente-relatorio-produto {
+    background-color: #BFD7EA;
+}
+
+.botao-gerente-relatorio-reclamacao {
+    background-color: #EEE0CB;
+}
+
+.container-botoes {
+    margin-bottom: 30px; 
+}
+
+.header {
+    border-bottom: 2px solid black;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+#container-gerente-lista {
+    display: block;
+}
+
+#container-gerente-atendimento-aberto, #container-gerente-atendimento, #container-gerente-relatorio-funcionario,
+#container-gerente-relatorio-produto, #container-gerente-relatorio-data, #container-gerente-relatorio-reclamacao
+{
+    display: none;
+}
+
+.btn-alterar {
+    background-color: #9DB6CF;
+}
+
+.btn-visualizar {
+    background-color: #88D38B;
+    margin: 0 15px;
+}
+
+.btn-visualizar {
+    background-color: #EDA7A7;
+}
+
+.btn-alterar:hover, .btn-visualizar:hover, .btn-visualizar:hover {
+    cursor: pointer;
+}
+
+.atendimento-atrasado {
+    background-color: #FF6464;
+}
+
+.atendimento-atrasado-semana {
+    background-color: #FDBF50;
+}
+
+.mensagem {
+    font-size: 24px;
+    font-weight: bold;
+}

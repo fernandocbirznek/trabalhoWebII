@@ -1,0 +1,94 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 15/07/2022, 16:21:08
+    Author     : User
+*/
+
+.conteudo {
+    background-color: #A7CECB;
+    min-height: 600px;
+}
+
+.botao-cliente {
+    padding: 6px 12px;
+    border-radius: 10px;
+}
+
+.botao-cliente:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 5px black;
+}
+
+.botao-cliente-alterar {
+    background-color: #F1E1A6;
+}
+
+.botao-cliente-alterar:hover, .botao-cliente-atendimento:hover, .botao-cliente-criar:hover, botao-cliente-deslogar  {
+    font-weight: 700;
+}
+
+.botao-cliente-atendimento {
+    background-color: #C3E5AE;
+}
+
+.botao-cliente-criar {
+    background-color: #E1B083;
+}
+
+.botao-cliente-deslogar {
+    background-color: #D47751;
+}
+
+.header {
+    border-bottom: 2px solid black;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+#container-cliente-atendimento {
+    display: block;
+}
+
+#container-cliente-alterar, #container-cliente-criar {
+    display: none;
+}
+
+.container-alterar {
+    padding: 20px;
+}
+
+.container-table {
+    margin: 30px 0;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+th {
+    text-align: center;
+}
+
+.gj-unselectable {
+    padding-bottom: 15px;
+}
+
+.detalhes:hover {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-remover-atendimento {
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: #FF6B6C;
+    color: white;
+    padding: 4px 15px;
+}
+
+.btn-remover-atendimento:hover {
+    cursor: pointer;
+    color: blue;
+}
