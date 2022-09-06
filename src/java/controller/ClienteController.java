@@ -28,11 +28,11 @@ public class ClienteController extends HttpServlet {
         HttpSession session = request.getSession();
         LoginBeans logado = (LoginBeans)session.getAttribute("logado");
         
-        /*if(logado.getLogado().equals("cliente")) {
-            request.setAttribute("msg", "Usuário deve se autenticar para acessar o sistema");
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+        if(logado.getCargo() != 1) {
+            request.setAttribute("mensagem", "Usuário deve se autenticar para acessar o sistema");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
             rd.forward(request, response);
-        }*/
+        }
         
         String action = request.getParameter("action");
         String idClienteString = request.getParameter("id");

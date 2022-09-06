@@ -13,5 +13,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        ${usuario.nomeUsuario}
+        ${loginBean.nome}
     </body>
 </html>

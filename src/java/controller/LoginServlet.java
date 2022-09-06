@@ -1,5 +1,9 @@
 package controller;
 
+import beans.LoginBeans;
+import beans.UsuarioBeans;
+import exception.BuscarUsuarioLoginException;
+import facade.LoginFacade;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
@@ -16,29 +21,50 @@ public class LoginServlet extends HttpServlet {
         
         RequestDispatcher rd;
         
-        //TODO, Buscar no banco de dados usuário
-        //Retirar variavel abaixo ao buscar na base o usuario
-        String usuario = "cliente";
+        UsuarioBeans usuario = new UsuarioBeans();
+        String login = request.getParameter("emailLogin");
+        String senha = request.getParameter("senhaLogin");
+        LoginBeans loginBean = new LoginBeans();
         
-        switch(usuario) {
-            case "cliente":
+        if(login != null && senha != null) {
+            try {
+                usuario = LoginFacade.buscarUsuarioLogin(login, senha);
+                loginBean.setCpf(usuario.getCepUsuario());
+                loginBean.setNome(usuario.getNomeUsuario());
+                loginBean.setId(usuario.getIdUsuario());
+                loginBean.setCargo(usuario.getCargoUsuario());
+                HttpSession session = request.getSession();
+                session.setAttribute("logado", loginBean);
+            } catch (BuscarUsuarioLoginException e) {
+                request.setAttribute("mensagem", "Erro ao logar");
+                request.setAttribute("usuario", usuario);
+                request.setAttribute("login", loginBean);
+                rd = getServletContext().getRequestDispatcher("/erro.jsp");
+                rd.forward(request, response);
+            }
+        } else {
+            rd = getServletContext().getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        }
+        
+        switch(usuario.getCargoUsuario()) {
+            case 1:
                 request.setAttribute("action", "listarAtendimentosCliente");
                 rd = getServletContext().getRequestDispatcher("/ClienteController");
                 rd.forward(request, response);
                 break;
-            case "funcionario":
-                request.setAttribute("action", "listarAtendimentosCliente");
+            case 2:
+                //request.setAttribute("action", "listarAtendimentosCliente");
                 rd = getServletContext().getRequestDispatcher("/FuncionarioController");
                 rd.forward(request, response);
                 break;
-            case "gerente":
-                request.setAttribute("action", "listarAtendimentosCliente");
+            case 3:
+                //request.setAttribute("action", "listarAtendimentosCliente");
                 rd = getServletContext().getRequestDispatcher("/GerenteController");
                 rd.forward(request, response);
                 break;
             default:
-                //TODO, criar página de erro
-                request.setAttribute("action", "listarAtendimentosCliente");
+                request.setAttribute("mensagem", "Nenhuma opção escolhida de usuário");
                 rd = getServletContext().getRequestDispatcher("/error.jsp");
                 rd.forward(request, response);
         }  

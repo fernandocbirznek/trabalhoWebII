@@ -40,7 +40,7 @@ public class GerenteDao {
                     UsuarioBeans usuario = new UsuarioBeans();
                     
                     usuario.setNomeUsuario(rs.getString(1));
-                    usuario.setCargoUsuario(rs.getString(2));
+                    usuario.setCargoUsuario(rs.getInt(2));
                     usuario.setIdUsuario(rs.getInt(3));
                     
                     usuarios.add(usuario);
@@ -69,7 +69,7 @@ public class GerenteDao {
                 usuario.setCidadeUsuario(rs.getInt(9));
                 usuario.setEstadoUsuario(rs.getInt(10));
                 usuario.setTelefoneUsuario(rs.getString(11));
-                usuario.setCargoUsuario(rs.getString(12));
+                usuario.setCargoUsuario(rs.getInt(12));
             }
             return usuario;
         } catch(SQLException e) {
@@ -90,7 +90,7 @@ public class GerenteDao {
             st.setInt(9, usuario.getCidadeUsuario());
             st.setInt(10, usuario.getEstadoUsuario());
             st.setString(11, usuario.getTelefoneUsuario());
-            st.setString(12, usuario.getCargoUsuario());
+            st.setInt(12, usuario.getCargoUsuario());
             st.setString(13, usuario.getSenhaUsuario());
             st.executeUpdate();
         } catch (SQLException e) {

@@ -14,7 +14,6 @@ import exception.RemoverUsuarioException;
 import facade.ClienteFacade;
 import facade.GerenteFacade;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,7 +36,7 @@ public class GerenteController extends HttpServlet {
         HttpSession session = request.getSession();
         LoginBeans logado = (LoginBeans)session.getAttribute("logado");
         
-        if(logado.getLogado().equals("gerente")) {
+        if(logado.getCargo() == 3) {
             request.setAttribute("msg", "Usuário deve se autenticar para acessar o sistema");
             rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);

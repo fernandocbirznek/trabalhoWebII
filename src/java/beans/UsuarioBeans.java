@@ -16,11 +16,11 @@ public class UsuarioBeans implements Serializable {
     private int estadoUsuario;
     private String telefoneUsuario;
     private String senhaUsuario;
-    private String cargoUsuario;
+    private int cargoUsuario;
     
     public UsuarioBeans() {}
 
-    public UsuarioBeans(int idUsuario, String nomeUsuario, String cpfUsuario, String emailUsuario, String ruaUsuario, String numeroUsuario, String complementoUsuario, String bairroUsuario, String cepUsuario, int cidadeUsuario, int estadoUsuario, String telefoneUsuario, String senhaUsuario, String cargoUsuario) {
+    public UsuarioBeans(int idUsuario, String nomeUsuario, String cpfUsuario, String emailUsuario, String ruaUsuario, String numeroUsuario, String complementoUsuario, String bairroUsuario, String cepUsuario, int cidadeUsuario, int estadoUsuario, String telefoneUsuario, String senhaUsuario, int cargoUsuario) {
         this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
         this.cpfUsuario = cpfUsuario;
@@ -141,11 +141,11 @@ public class UsuarioBeans implements Serializable {
         this.senhaUsuario = senhaUsuario;
     }
 
-    public String getCargoUsuario() {
+    public int getCargoUsuario() {
         return cargoUsuario;
     }
 
-    public void setCargoUsuario(String cargoUsuario) {
+    public void setCargoUsuario(int cargoUsuario) {
         this.cargoUsuario = cargoUsuario;
     }
 }

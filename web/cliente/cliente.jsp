@@ -27,10 +27,10 @@
     </head>
     <body class="imagem">
         
-        <%-- <c:if test="${empty sessionScope.logado}" >
+        <c:if test="${empty sessionScope.logado}" >
             <c:set var="msg" value="Precisa fazer o login" scope="request" />
             <jsp:forward page="index.jsp" />
-        </c:if>--%>
+        </c:if>
         
         <div class="container conteudo">
             <div class="header row justify-content-center">
