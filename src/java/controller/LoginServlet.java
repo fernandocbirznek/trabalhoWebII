@@ -35,14 +35,14 @@ public class LoginServlet extends HttpServlet {
                 loginBean.setCargo(usuario.getCargoUsuario());
                 HttpSession session = request.getSession();
                 session.setAttribute("logado", loginBean);
+                session.setAttribute("usuario", usuario);
             } catch (BuscarUsuarioLoginException e) {
-                request.setAttribute("mensagem", "Erro ao logar");
-                request.setAttribute("usuario", usuario);
-                request.setAttribute("login", loginBean);
+                request.setAttribute("mensagem", "Erro ao buscar usuário!!!");
                 rd = getServletContext().getRequestDispatcher("/erro.jsp");
                 rd.forward(request, response);
             }
         } else {
+            request.setAttribute("mensagem", "Senha ou login vazio");
             rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }
@@ -64,8 +64,8 @@ public class LoginServlet extends HttpServlet {
                 rd.forward(request, response);
                 break;
             default:
-                request.setAttribute("mensagem", "Nenhuma opção escolhida de usuário");
-                rd = getServletContext().getRequestDispatcher("/error.jsp");
+                request.setAttribute("mensagem", "Usuário/senha inválido ou não cadastrado!!!");
+                rd = getServletContext().getRequestDispatcher("/erro.jsp");
                 rd.forward(request, response);
         }  
     }

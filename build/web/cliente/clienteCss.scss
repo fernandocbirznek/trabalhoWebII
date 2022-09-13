@@ -80,8 +80,17 @@ th {
     font-weight: 600;
 }
 
+.btn-detalhar-atendimento {
+    background-color: #CAE7B9;
+    margin-bottom: 10px;
+    color: black;
+    border-radius: 10px;
+    padding: 4px 15px;
+}
+
 .btn-remover-atendimento {
-    margin-top: 20px;
+    display: inline-block;
+    margin-top: 10px;
     border-radius: 10px;
     background-color: #FF6B6C;
     color: white;
@@ -91,4 +100,8 @@ th {
 .btn-remover-atendimento:hover {
     cursor: pointer;
     color: blue;
+}
+
+.mensagem {
+    color: #D47751;
 }

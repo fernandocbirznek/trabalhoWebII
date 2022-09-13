@@ -1,12 +1,15 @@
 package facade;
 
 import beans.AtendimentoBeans;
+import beans.TipoAtendimentoBeans;
 import beans.UsuarioBeans;
 import dao.ClienteDao;
 import dao.ConnectionFactory;
 import exception.AtualizarClienteException;
 import exception.BuscarAtendimentoClienteException;
 import exception.BuscarAtendimentoIdException;
+import exception.BuscarTipoAtendimentoException;
+import exception.CadastrarNovoClienteException;
 import exception.DaoException;
 import exception.InserirAtendimentoException;
 import exception.RemoverAtendimentoException;
@@ -36,38 +39,8 @@ public class ClienteFacade {
         }
     }
     
-    public static void atualizarCliente(HttpServletRequest request) throws AtualizarClienteException {
+    public static void atualizarCliente(UsuarioBeans cliente) throws AtualizarClienteException {
         try (ConnectionFactory factory = new ConnectionFactory()) {
-            String id = request.getParameter("id");
-            String nome = request.getParameter("nomeCompletoAlterar");
-            String telefone = request.getParameter("telefoneAlterar");
-            telefone = telefone.replace("(", "");
-            telefone = telefone.replace(")", "");
-            telefone = telefone.replace("-", "");
-            String senha = request.getParameter("senhaAlterar");
-            String rua = request.getParameter("ruaAlterar");
-            String numero = request.getParameter("numeroAlterar");
-            String complemento = request.getParameter("complementoAlterar");
-            String bairro = request.getParameter("bairroAlterar");
-            String cep = request.getParameter("cepAlterar");
-            cep = cep.replace(".", "");
-            cep = cep.replace("-", "");
-            String cidade = request.getParameter("cidadeAlterar");
-            String estado = request.getParameter("estadoAlterar");
-
-            UsuarioBeans cliente = new UsuarioBeans();
-            cliente.setIdUsuario(Integer.parseInt(id));
-            cliente.setNomeUsuario(nome);
-            cliente.setTelefoneUsuario(telefone);
-            cliente.setSenhaUsuario(senha);
-            cliente.setRuaUsuario(rua);
-            cliente.setNumeroUsuario(numero);
-            cliente.setComplementoUsuario(complemento);
-            cliente.setBairroUsuario(bairro);
-            cliente.setCepUsuario(cep);
-            cliente.setCidadeUsuario(Integer.parseInt(cidade));
-            cliente.setEstadoUsuario(Integer.parseInt(estado));
-            
             ClienteDao clienteDao = new ClienteDao(factory.getConnection());
             clienteDao.atualizar(cliente);   
         } catch (DaoException e) {
@@ -84,35 +57,31 @@ public class ClienteFacade {
         }
     }
     
-    public static void inserirAtendimento(HttpServletRequest request) throws InserirAtendimentoException {
+    public static void cadastrarNovoCliente(UsuarioBeans novoCliente) throws CadastrarNovoClienteException {
+        try (ConnectionFactory factory = new ConnectionFactory()) {  
+            ClienteDao clienteDao = new ClienteDao(factory.getConnection());
+            clienteDao.cadastrarNovoCliente(novoCliente);
+        } catch (DaoException e) {
+            throw new CadastrarNovoClienteException("Erro ao buscar cliente: id = " + novoCliente, e);
+        }
+    }
+    
+    public static void inserirAtendimento(AtendimentoBeans atendimento) throws InserirAtendimentoException {
         try (ConnectionFactory factory = new ConnectionFactory()) {
-
-            String data = request.getParameter("dataInserir");
-            String tipo = request.getParameter("tipoInserir");
-            String cliente = request.getParameter("clienteInserir");
-            String solucao = request.getParameter("solucaoInserir");
-            String descricao = request.getParameter("descricaoInserir");
-            String situacao = request.getParameter("situacaoInserir");
-            String produto = request.getParameter("produtoInserir");
-            
-            AtendimentoBeans atendimento = new AtendimentoBeans();
-            //atendimento.setDataAtendimento(data);
-            //TODO, NECESSÁRIO TRANSFORMAR DATA PARA TIPO ADEQUADO
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String dateToStr = dateFormat.format(data);
-            atendimento.setDataAtendimento(dateToStr);
-            
-            atendimento.setTipoAtendimento(tipo);
-            atendimento.setUsuarioAtendimento(cliente);
-            atendimento.setSolucaoAtendimento(solucao);
-            atendimento.setDescricaoAtendimento(descricao);
-            atendimento.setSituacaoAtendimento(situacao);
-            atendimento.setProdutoAtendimento(produto);
-            
             ClienteDao clienteDao = new ClienteDao(factory.getConnection());
             clienteDao.inserirAtendimentoCliente(atendimento);        
         } catch (DaoException e) {
-            throw new InserirAtendimentoException("Erro ao alterar cliente: " + request, e);
+            throw new InserirAtendimentoException("Erro ao cadastrar atendimento!!!", e);
+        }
+    }
+    
+    public static List<TipoAtendimentoBeans> buscarTipoAtendimento() throws BuscarTipoAtendimentoException {
+        try (ConnectionFactory factory = new ConnectionFactory()) {  
+            ClienteDao clienteDao = new ClienteDao(factory.getConnection());
+            List<TipoAtendimentoBeans> listaTipoAtendimentos = clienteDao.buscarTipoAtendimentos();  
+            return listaTipoAtendimentos;
+        } catch (DaoException e) {
+            throw new BuscarTipoAtendimentoException("Erro ao buscar tipo atendimento!!!", e);
         }
     }
 }

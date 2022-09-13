@@ -1,6 +1,7 @@
 package dao;
 
 import beans.AtendimentoBeans;
+import beans.TipoAtendimentoBeans;
 import beans.UsuarioBeans;
 import exception.DaoException;
 import java.sql.Connection;
@@ -9,33 +10,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ClienteDao implements daoT<UsuarioBeans> {
-    private static final String ATUALIZAR = "UPDATE NOMETABELA SET "
-            + "nome_cliente = ?, "
-            + "telefone_cliente = ?, "
-            + "senha_cliente = ?, "
-            + "rua_cliente = ?, "
-            + "numero_cliente = ?, "
-            + "complemento_cliente = ?, "
-            + "bairro_cliente = ?, "
-            + "cep_cliente = ?, "
-            + "cidade_cliente = ?,"
-            + "estado_cliente = ? WHERE id_cliente = ?";
+    private static final String ATUALIZAR = "UPDATE tb_usuario SET "
+            + "nome_usuario = ?, "
+            + "senha_usuario = ?, "
+            + "rua_usuario = ?, "
+            + "numero_usuario = ?, "
+            + "complemento_usuario = ?, "
+            + "bairro_usuario = ?, "
+            + "cep_usuario = ?, "
+            + "cidade_usuario = ?, "
+            + "estado_usuario = ?, telefone_usuario = ? WHERE id_usuario = ?";
     
-    private static final String SELECIONARATENDIMENTOS = "SELECT tipo_atendimento, descricao_atendimento, "
-            + "produto_atendimento, situacao_atendimento, data_atendimento, id_atendimento "
-            + "FROM NOMETABELA WHERE cliente_atendimento = ?";
+    private static final String SELECIONARATENDIMENTOS = "SELECT id, dataAtenidmento, cliente, situacao, descricao, solucao, fk_TipoAtendimento_idTipoAtendimento "
+            + "FROM atendimento WHERE cliente = ?";
     
-    private static final String INSERIRATENDIMENTOCLIENTE = "INSERT INTO NOMETABELA("
-            + "data_atendimento, cliente_atendimento, situacao_atendimento, produto_atendimento, tipo_atendimento, "
-            + "descricao_atendimento, solucao_atendimento) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String REMOVERPORID = "DELETE FROM atendimento WHERE id = ?";
     
-    private static final String REMOVERPORID = "DELETE FROM NOMETABELA WHERE id_atendimento = ?";
+    private static final String SELECIONARATENDIMENTOPORID = "SELECT id, dataAtenidmento, "
+            + "cliente, situacao, descricao, solucao, fk_TipoAtendimento_idTipoAtendimento "
+            + "FROM atendimento WHERE id = ?";
     
-    private static final String SELECIONARATENDIMENTOPORID = "SELECT tipo_atendimento, descricao_atendimento, "
-            + "produto_atendimento, situacao_atendimento, data_atendimento, solucao_atendimento "
-            + "FROM NOMETABELA WHERE id_atendimento = ?";
+    private static final String NOVOCLIENTE = "INSERT INTO tb_usuario(nome_usuario, email_usuario, senha_usuario, cpf_usuario, rua_usuario, numero_usuario, "
+            + "complemento_usuario, bairro_usuario, cep_usuario, cidade_usuario, estado_usuario, telefone_usuario, cargo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    private static final String INSERIRATENDIMENTO = "INSERT INTO Atendimento(id, dataAtenidmento, cliente, situacao, descricao, solucao, fk_TipoAtendimento_idTipoAtendimento) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+    private static final String SELECIONARTIPOATENDIMENTO = "SELECT * FROM TipoAtendimento";
+
     
     private Connection con = null;
     
@@ -52,13 +57,14 @@ public class ClienteDao implements daoT<UsuarioBeans> {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
-                atendimento.setTipoAtendimento(rs.getString("tipo_atendimento"));
-                atendimento.setDescricaoAtendimento(rs.getString("descricao_atendimento"));
-                atendimento.setProdutoAtendimento(rs.getString("produto_atendimento"));
-                atendimento.setSituacaoAtendimento(rs.getString("situacao_atendimento"));
-                atendimento.setDataAtendimento(rs.getString("data_atendimento"));
-                atendimento.setSolucaoAtendimento(rs.getString("solucao_atendimento"));
-                
+                atendimento.setTipoAtendimento(rs.getInt(1));
+                java.util.Date data = new java.util.Date(rs.getDate(2).getTime());
+                atendimento.setDataAtendimento(data);
+                atendimento.setUsuarioAtendimento(rs.getInt(3));
+                atendimento.setSituacaoAtendimento(rs.getBoolean(4));
+                atendimento.setDescricaoAtendimento(rs.getString(5));
+                atendimento.setSolucaoAtendimento(rs.getString(6));
+                atendimento.setTipoAtendimento(rs.getInt(7));  
             }
             return atendimento;
         } catch(SQLException e) {
@@ -67,17 +73,39 @@ public class ClienteDao implements daoT<UsuarioBeans> {
     }
     
     public void inserirAtendimentoCliente(AtendimentoBeans atendimento) throws DaoException {
-        try (PreparedStatement st = con.prepareStatement(INSERIRATENDIMENTOCLIENTE)) {
-            st.setString(1, atendimento.getDataAtendimento());
-            st.setString(2, atendimento.getUsuarioAtendimento());
-            st.setString(3, atendimento.getSituacaoAtendimento());
-            st.setString(4, atendimento.getProdutoAtendimento());
-            st.setString(5, atendimento.getTipoAtendimento());
-            st.setString(6, atendimento.getDescricaoAtendimento());
-            st.setString(7, atendimento.getSolucaoAtendimento());
+        try (PreparedStatement st = con.prepareStatement(INSERIRATENDIMENTO)) {
+            st.setInt(1, new Random().nextInt(10000));
+            java.util.Date dt = atendimento.getDataAtendimento();
+            st.setDate(2, new java.sql.Date(dt.getTime()));
+            st.setInt(3, atendimento.getUsuarioAtendimento());
+            st.setBoolean(4, atendimento.getSituacaoAtendimento());
+            st.setString(5, atendimento.getDescricaoAtendimento());
+            st.setString(6, atendimento.getSolucaoAtendimento());
+            st.setInt(7, atendimento.getTipoAtendimento());
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Erro ao Inserir cliente: " + INSERIRATENDIMENTOCLIENTE, e);
+            throw new DaoException("Erro ao cadastrar atendimento!!! " + INSERIRATENDIMENTO, e);
+        } 
+    }
+    
+    public void cadastrarNovoCliente(UsuarioBeans novoCliente) throws DaoException {
+        try (PreparedStatement st = con.prepareStatement(NOVOCLIENTE)) {
+            st.setString(1, novoCliente.getNomeUsuario());
+            st.setString(2, novoCliente.getEmailUsuario());
+            st.setString(3, novoCliente.getSenhaUsuario());
+            st.setString(4, novoCliente.getCpfUsuario());
+            st.setString(5, novoCliente.getRuaUsuario());
+            st.setString(6, novoCliente.getNumeroUsuario());
+            st.setString(7, novoCliente.getComplementoUsuario());
+            st.setString(8, novoCliente.getBairroUsuario());
+            st.setString(9, novoCliente.getCepUsuario());
+            st.setInt(10, novoCliente.getCidadeUsuario());
+            st.setInt(11, novoCliente.getEstadoUsuario());
+            st.setString(12, novoCliente.getTelefoneUsuario());
+            st.setInt(13, novoCliente.getCargoUsuario());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Erro ao cadastrar novo cliente: " + NOVOCLIENTE, e);
         } 
     }
     
@@ -89,12 +117,13 @@ public class ClienteDao implements daoT<UsuarioBeans> {
             while(rs.next()){
                 AtendimentoBeans atendimento = new AtendimentoBeans();
 
-                atendimento.setTipoAtendimento(rs.getString(1));
-                atendimento.setDescricaoAtendimento(rs.getString(2));            
-                atendimento.setProdutoAtendimento(rs.getString(3));
-                atendimento.setSituacaoAtendimento(rs.getString(4));
-                atendimento.setDataAtendimento(rs.getString(5));       
-                atendimento.setIdAtendimento(rs.getInt(6));
+                atendimento.setIdAtendimento(rs.getInt(1));
+                java.util.Date data = new java.util.Date(rs.getDate(2).getTime());
+                atendimento.setDataAtendimento(data); 
+                atendimento.setSituacaoAtendimento(rs.getBoolean(4));
+                atendimento.setDescricaoAtendimento(rs.getString(5)); 
+                atendimento.setSolucaoAtendimento(rs.getString(6));
+                atendimento.setTipoAtendimento(rs.getInt(7));
 
                 atendimentos.add(atendimento);
             } 
@@ -104,19 +133,36 @@ public class ClienteDao implements daoT<UsuarioBeans> {
         return atendimentos;
     }
 
+    public List<TipoAtendimentoBeans> buscarTipoAtendimentos() throws DaoException {
+        List<TipoAtendimentoBeans> tipoAtendimentos = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(SELECIONARTIPOATENDIMENTO)) {
+            try (ResultSet rs = st.executeQuery()) {
+                while(rs.next()){
+                    TipoAtendimentoBeans tipoAtendimento = new TipoAtendimentoBeans();
+                    tipoAtendimento.setIdTipoAtendimento(rs.getInt(1));
+                    tipoAtendimento.setNomeTipoAtendimento(rs.getString(2));
+                    tipoAtendimentos.add(tipoAtendimento);
+                }
+            }
+            return tipoAtendimentos;
+        } catch (SQLException e) {
+            throw new DaoException("Erro ao buscar tipos atendimentos: " + SELECIONARTIPOATENDIMENTO, e);
+        }
+    }
+    
     @Override
     public void atualizar(UsuarioBeans cliente) throws DaoException {
         try (PreparedStatement st = con.prepareStatement(ATUALIZAR)) {
             st.setString(1, cliente.getNomeUsuario());
-            st.setString(2, cliente.getTelefoneUsuario());
-            st.setString(3, cliente.getSenhaUsuario());
-            st.setString(4, cliente.getRuaUsuario());
-            st.setString(5, cliente.getNumeroUsuario());
-            st.setString(6, cliente.getComplementoUsuario());
-            st.setString(7, cliente.getBairroUsuario());
-            st.setString(8, cliente.getCepUsuario());
-            st.setInt(9, cliente.getCidadeUsuario());
-            st.setInt(10, cliente.getEstadoUsuario());
+            st.setString(2, cliente.getSenhaUsuario());
+            st.setString(3, cliente.getRuaUsuario());
+            st.setString(4, cliente.getNumeroUsuario());
+            st.setString(5, cliente.getComplementoUsuario());
+            st.setString(6, cliente.getBairroUsuario());
+            st.setString(7, cliente.getCepUsuario());
+            st.setInt(8, cliente.getCidadeUsuario());
+            st.setInt(9, cliente.getEstadoUsuario());
+            st.setString(10, cliente.getTelefoneUsuario());
             st.setInt(11, cliente.getIdUsuario());
             st.executeUpdate();
         } catch (SQLException e) {
@@ -130,7 +176,7 @@ public class ClienteDao implements daoT<UsuarioBeans> {
             st.setInt(1, id);
             st.executeUpdate();
         } catch(SQLException e) {
-            throw new DaoException("Erro buscando um usuário: " + REMOVERPORID, e);
+            throw new DaoException("Erro ao remover atendimento: " + REMOVERPORID, e);
         }
     }
     

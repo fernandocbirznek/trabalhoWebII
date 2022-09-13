@@ -17,10 +17,17 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+        <style>
+            .mensagem {
+                color: red;
+            }
+        </style>
+        
     </head>
     <body class="imagem">
         <div class="container conteudo">
             <div class="header">
+                <div class="mensagem">${mensagem}</div>
                 <div class="titulo">
                     BEIBE<br>
                     Beauty Embuste Indústria de Beleza e Estética <br>
@@ -29,110 +36,9 @@
                     <span class="endereco">(41) 9 1313-1313 </span>
                 </div>
                 <div class="botoes">
-                    <button type="button" data-toggle="modal" data-target="#criarConta" class="botao botao-acessar">
+                    <a class="botao botao-acessar" href="CriarContaController?action=formCriarConta">
                         Criar Conta
-                    </button>
-                    
-                    <div class="modal fade bd-example-modal-lg" id="criarConta" tabindex="-1" role="dialog" aria-labelledby="criarContaModal" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                           <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="criarContaModal">Crie uma conta</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                 
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group">
-                                                    <label for="nomeCompleto">Nome Completo</label>
-                                                    <input class="form-control" type="text" placeholder="Nome completo" name="nomeCompleto">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group">
-                                                    <label for="cpf">CPF</label>
-                                                    <input type="text" class="form-control" onkeypress="$(this).mask('000.000.000-00');" placeholder="000.000.000-00" name="cpf">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group">
-                                                <label for="email">Email</label>
-                                                <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" name="email">
-                                            </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group">
-                                                    <label for="senha">Senha</label>
-                                                    <input type="password" class="form-control" placeholder="Password" name="senha">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-6">
-                                                <label for="telefone">Telefone/Celular</label>
-                                                <input type="text" class="form-control" onkeypress="$(this).mask('(00) 0000-00009');" placeholder="(00) 0000-00000" name="telefone">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-8">
-                                                <div class="form-group">
-                                                    <label for="rua">Rua</label>
-                                                    <input class="form-control" type="text" placeholder="Nome completo" name="rua">
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="form-group">
-                                                    <label for="numero">Número</label>
-                                                    <input type="number" class="form-control" name="numero">
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="form-group">
-                                                    <label for="complemento">Complemento</label>
-                                                    <input type="text" class="form-control" name="complemento">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <div class="form-group">
-                                                    <label for="bairro">Bairro</label>
-                                                    <input class="form-control" type="text" name="bairro">
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="form-group">
-                                                    <label for="cep">CEP</label>
-                                                    <input type="text" class="form-control" onkeypress="$(this).mask('00.000-000')" placeholder="00.000-000" name="cep">
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="form-group">
-                                                    <label for="cidade">Cidade</label>
-                                                    <input type="text" class="form-control" name="cidade">
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="form-group">
-                                                    <label for="estado">Estado</label>
-                                                    <input type="text" class="form-control" name="estado">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Cadastrar</button>
-                                    </form>
-                                    
-                                </div>
-                           </div>
-                        </div>
-                    </div>
+                    </a>
                     
                     <button type="button" data-toggle="modal" data-target="#acessarSistema" class="botao botao-criar">
                         Acessar sistema
@@ -162,11 +68,7 @@
 
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                         <button type="submit" class="btn btn-primary">Logar</button>
-                                    </form>
-                                    <form action="LoginServlet" method="POST">
-                                        <button type="submit" class="btn btn-primary">Gerente</button>
-                                    </form>
-                                    
+                                    </form>                             
                                 </div>
                            </div>
                         </div>
