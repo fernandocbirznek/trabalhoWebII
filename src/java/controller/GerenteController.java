@@ -90,7 +90,39 @@ public class GerenteController extends HttpServlet {
                 break;
             case "adicionarUsuario":
                 try {
-                    GerenteFacade.adicionarUsuario(request);
+                    
+                    String id = request.getParameter("id");
+                    String nome = request.getParameter("nomeCompletoAlterar");
+                    String telefone = request.getParameter("telefoneAlterar");
+                    telefone = telefone.replace("(", "");
+                    telefone = telefone.replace(")", "");
+                    telefone = telefone.replace("-", "");
+                    String senha = request.getParameter("senhaAlterar");
+                    String rua = request.getParameter("ruaAlterar");
+                    String numero = request.getParameter("numeroAlterar");
+                    String complemento = request.getParameter("complementoAlterar");
+                    String bairro = request.getParameter("bairroAlterar");
+                    String cep = request.getParameter("cepAlterar");
+                    cep = cep.replace(".", "");
+                    cep = cep.replace("-", "");
+                    String cidade = request.getParameter("cidadeAlterar");
+                    String estado = request.getParameter("estadoAlterar");
+
+                    UsuarioBeans usuario = new UsuarioBeans();
+                    usuario.setIdUsuario(Integer.parseInt(id));
+                    usuario.setNomeUsuario(nome);
+                    usuario.setTelefoneUsuario(telefone);
+                    usuario.setSenhaUsuario(senha);
+                    usuario.setRuaUsuario(rua);
+                    usuario.setNumeroUsuario(numero);
+                    usuario.setComplementoUsuario(complemento);
+                    usuario.setBairroUsuario(bairro);
+                    usuario.setCepUsuario(cep);
+                    usuario.setCidadeUsuario(Integer.parseInt(cidade));
+                    usuario.setEstadoUsuario(Integer.parseInt(estado));
+                    
+                    
+                    GerenteFacade.adicionarUsuario(usuario);
                     List<UsuarioBeans> usuarios = GerenteFacade.buscarUsuarios();
                     request.setAttribute("usuarios", usuarios);
                     List<AtendimentoBeans> atendimentos = GerenteFacade.buscarAtendimentos();
@@ -126,7 +158,38 @@ public class GerenteController extends HttpServlet {
                 break; 
             case "alterarUsuario":
                 try {
-                    ClienteFacade.atualizarCliente(request);
+                    
+                    String id = request.getParameter("id");
+                    String nome = request.getParameter("nomeCompletoAlterar");
+                    String telefone = request.getParameter("telefoneAlterar");
+                    telefone = telefone.replace("(", "");
+                    telefone = telefone.replace(")", "");
+                    telefone = telefone.replace("-", "");
+                    String senha = request.getParameter("senhaAlterar");
+                    String rua = request.getParameter("ruaAlterar");
+                    String numero = request.getParameter("numeroAlterar");
+                    String complemento = request.getParameter("complementoAlterar");
+                    String bairro = request.getParameter("bairroAlterar");
+                    String cep = request.getParameter("cepAlterar");
+                    cep = cep.replace(".", "");
+                    cep = cep.replace("-", "");
+                    String cidade = request.getParameter("cidadeAlterar");
+                    String estado = request.getParameter("estadoAlterar");
+
+                    UsuarioBeans usuario = new UsuarioBeans();
+                    usuario.setIdUsuario(Integer.parseInt(id));
+                    usuario.setNomeUsuario(nome);
+                    usuario.setTelefoneUsuario(telefone);
+                    usuario.setSenhaUsuario(senha);
+                    usuario.setRuaUsuario(rua);
+                    usuario.setNumeroUsuario(numero);
+                    usuario.setComplementoUsuario(complemento);
+                    usuario.setBairroUsuario(bairro);
+                    usuario.setCepUsuario(cep);
+                    usuario.setCidadeUsuario(Integer.parseInt(cidade));
+                    usuario.setEstadoUsuario(Integer.parseInt(estado));
+                    
+                    ClienteFacade.atualizarCliente(usuario);
                     List<UsuarioBeans> usuarios = GerenteFacade.buscarUsuarios();
                     request.setAttribute("usuarios", usuarios);
                     List<AtendimentoBeans> atendimentos = GerenteFacade.buscarAtendimentos();

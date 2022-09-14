@@ -1,21 +1,24 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class AtendimentoBeans implements Serializable  {
     private int idAtendimento;
-    private String dataAtendimento;
+    private Date dataAtendimento;
     private long diasAtrasadosAtendimento;
-    private String usuarioAtendimento;
-    private String situacaoAtendimento;
+    private int usuarioAtendimento;
+    private boolean situacaoAtendimento;
     private String produtoAtendimento;
-    private String tipoAtendimento;
+    private int tipoAtendimento;
     private String descricaoAtendimento;
     private String solucaoAtendimento;
+    private String tipoAtendimentoString;
+    private String dataAtendimentoString;
     
-     public AtendimentoBeans() {}
+    public AtendimentoBeans() {}
 
-    public AtendimentoBeans(int idAtendimento, String dataAtendimento, long diasAtrasadosAtendimento, String usuarioAtendimento, String situacaoAtendimento, String produtoAtendimento, String tipoAtendimento, String descricaoAtendimento, String solucaoAtendimento) {
+    public AtendimentoBeans(int idAtendimento, Date dataAtendimento, long diasAtrasadosAtendimento, int usuarioAtendimento, boolean situacaoAtendimento, String produtoAtendimento, int tipoAtendimento, String descricaoAtendimento, String solucaoAtendimento) {
         this.idAtendimento = idAtendimento;
         this.dataAtendimento = dataAtendimento;
         this.diasAtrasadosAtendimento = diasAtrasadosAtendimento;
@@ -35,11 +38,11 @@ public class AtendimentoBeans implements Serializable  {
         this.idAtendimento = idAtendimento;
     }
 
-    public String getDataAtendimento() {
+    public Date getDataAtendimento() {
         return dataAtendimento;
     }
 
-    public void setDataAtendimento(String dataAtendimento) {
+    public void setDataAtendimento(Date dataAtendimento) {
         this.dataAtendimento = dataAtendimento;
     }
 
@@ -51,19 +54,19 @@ public class AtendimentoBeans implements Serializable  {
         this.diasAtrasadosAtendimento = diasAtrasadosAtendimento;
     }
 
-    public String getUsuarioAtendimento() {
+    public int getUsuarioAtendimento() {
         return usuarioAtendimento;
     }
 
-    public void setUsuarioAtendimento(String usuarioAtendimento) {
+    public void setUsuarioAtendimento(int usuarioAtendimento) {
         this.usuarioAtendimento = usuarioAtendimento;
     }
 
-    public String getSituacaoAtendimento() {
+    public boolean getSituacaoAtendimento() {
         return situacaoAtendimento;
     }
 
-    public void setSituacaoAtendimento(String situacaoAtendimento) {
+    public void setSituacaoAtendimento(boolean situacaoAtendimento) {
         this.situacaoAtendimento = situacaoAtendimento;
     }
 
@@ -75,11 +78,11 @@ public class AtendimentoBeans implements Serializable  {
         this.produtoAtendimento = produtoAtendimento;
     }
 
-    public String getTipoAtendimento() {
+    public int getTipoAtendimento() {
         return tipoAtendimento;
     }
 
-    public void setTipoAtendimento(String tipoAtendimento) {
+    public void setTipoAtendimento(int tipoAtendimento) {
         this.tipoAtendimento = tipoAtendimento;
     }
 
@@ -97,6 +100,22 @@ public class AtendimentoBeans implements Serializable  {
 
     public void setSolucaoAtendimento(String solucaoAtendimento) {
         this.solucaoAtendimento = solucaoAtendimento;
+    }
+
+    public String getTipoAtendimentoString() {
+        return tipoAtendimentoString;
+    }
+
+    public void setTipoAtendimentoString(String tipoAtendimentoString) {
+        this.tipoAtendimentoString = tipoAtendimentoString;
+    }
+
+    public String getDataAtendimentoString() {
+        return dataAtendimentoString;
+    }
+
+    public void setDataAtendimentoString(String dataAtendimentoString) {
+        this.dataAtendimentoString = dataAtendimentoString;
     }
      
      

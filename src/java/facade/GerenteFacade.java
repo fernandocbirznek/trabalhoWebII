@@ -39,38 +39,8 @@ public class GerenteFacade {
         }
     }
     
-    public static void adicionarUsuario(HttpServletRequest request) throws AdicionarUsuarioException {
+    public static void adicionarUsuario(UsuarioBeans usuario) throws AdicionarUsuarioException {
         try (ConnectionFactory factory = new ConnectionFactory()) {
-            String id = request.getParameter("id");
-            String nome = request.getParameter("nomeCompletoAlterar");
-            String telefone = request.getParameter("telefoneAlterar");
-            telefone = telefone.replace("(", "");
-            telefone = telefone.replace(")", "");
-            telefone = telefone.replace("-", "");
-            String senha = request.getParameter("senhaAlterar");
-            String rua = request.getParameter("ruaAlterar");
-            String numero = request.getParameter("numeroAlterar");
-            String complemento = request.getParameter("complementoAlterar");
-            String bairro = request.getParameter("bairroAlterar");
-            String cep = request.getParameter("cepAlterar");
-            cep = cep.replace(".", "");
-            cep = cep.replace("-", "");
-            String cidade = request.getParameter("cidadeAlterar");
-            String estado = request.getParameter("estadoAlterar");
-
-            UsuarioBeans usuario = new UsuarioBeans();
-            usuario.setIdUsuario(Integer.parseInt(id));
-            usuario.setNomeUsuario(nome);
-            usuario.setTelefoneUsuario(telefone);
-            usuario.setSenhaUsuario(senha);
-            usuario.setRuaUsuario(rua);
-            usuario.setNumeroUsuario(numero);
-            usuario.setComplementoUsuario(complemento);
-            usuario.setBairroUsuario(bairro);
-            usuario.setCepUsuario(cep);
-            usuario.setCidadeUsuario(Integer.parseInt(cidade));
-            usuario.setEstadoUsuario(Integer.parseInt(estado));
-            
             GerenteDao gerenteDao = new GerenteDao(factory.getConnection());
             gerenteDao.adicionarUsuario(usuario);   
         } catch (DaoException e) {

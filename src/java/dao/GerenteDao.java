@@ -105,9 +105,9 @@ public class GerenteDao {
                 while(rs.next()){
                     AtendimentoBeans atendimento = new AtendimentoBeans();
                     atendimento.setIdAtendimento(rs.getInt(1));
-                    atendimento.setUsuarioAtendimento(rs.getString(2));
-                    atendimento.setDataAtendimento(rs.getString(3));
-                    atendimento.setSituacaoAtendimento(rs.getString(4));
+                    atendimento.setUsuarioAtendimento(rs.getInt(2));
+                    //atendimento.setDataAtendimento(rs.getString(3));
+                    atendimento.setSituacaoAtendimento(rs.getBoolean(4));
                     
                     //TODO, precisa verificar se ta certo essa formatação de dias atrasados
                     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
